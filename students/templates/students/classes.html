@@ -1,0 +1,86 @@
+{% extends "students/base.html "%}
+
+{% block body %}
+        <!-- Table Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-12">
+                        {% if grades %}
+                        <div class="bg-light rounded h-100 p-4">
+                            {% if academic_year %}
+                            <h6 class="mb-4">All Students {{ academic_year.year }} {{ academic_year.term }} </h6>
+                            {% endif %}
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Class</th>
+                                            <th scope="col">Total Students</th>
+                                            <th scope="col">Total Female Students</th>
+                                            <th scope="col">Total Male Students</th>
+                                            <th scope="col">Form Teacher</th>
+                                            <th scope="col">Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for grade in grades %}
+                                        <tr>
+
+                                            <td>{{ grade.class_name }}</td>
+                                            <td>67</td>
+                                            <td>20</td>
+                                            <td>89</td>
+                                            <td>{{ grade.class_teacher }}</td>
+                                            <td>
+                                                <a class="btn btn-success" href="{% url 'index' grade.class_name academic_year_id %}">Students Info</a>
+                                                <a class="btn btn-primary"  href="{% url 'student_grades' grade.class_name academic_year_id %}">Grades</a>
+                                            </td>
+
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% else %}
+                            <h5 class="alert alert-primary ms-4 me-4"> No Class Records</h5>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!-- Table End -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Single Line Chart</h6>
+                            <canvas id="line-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Total No Of Students Per Gender</h6>
+                            <canvas id="salse-revenue"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Single Bar Chart</h6>
+                            <canvas id="bar-chart"></canvas>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Multiple Bar Chart</h6>
+                            <canvas id="worldwide-sales"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+{% endblock %}
