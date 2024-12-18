@@ -1,0 +1,104 @@
+{% extends "teachers/teacher_base.html "%}
+
+{% block body %}
+    <style>
+
+        .search-bar{
+            box-shadow: 1px 2px 1px 1px  #009CFF;
+            width: 400px;
+            height: 40px;
+        }
+
+    </style>
+    <div class="container-fluid">
+       <br>
+        <div class="row">
+            <div class="col-12">
+                {% if students %}
+                    <div class="card bg-light ms-4 mb-4">
+                        <div class="card-heading">
+                            <h4 class="me-5 subs-head"><i class="fa-solid fa-list fa-lg me-3"></i>{{class_name}} Students </h4>
+                            <form class="col-5 mb-2 me-5 ">
+                                <input class="form-control border-1 search-bar" type="search" placeholder="Search">
+                            </form>
+                            <h4 class="me-5 subs-head" >{{ academic_year.year }} {{ academic_year.term }}</h4>
+
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">First Name</th>
+                                                <th scope="col">Last Name</th>
+                                                <th scope="col">Class</th>
+                                                <th scope="col">Gender</th>
+                                                <th scope="col">Lives With</th>
+                                                <th scope="col">DOB</th>
+                                                <th scope="col">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for student in students %}
+                                                <tr>
+                                                    <td>{{ student.firstname }}</td>
+                                                    <td>{{ student.lastname }}</td>
+                                                    <td>{{ student.grade }}</td>
+                                                    <td>{{ student.gender}}</td>
+                                                    <td>{{ student.live_with}}</td>
+                                                    <td>{{ student.date_of_birth }}</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-success me-1"
+                                                                href="{% url 'view_form_student_grade' student.id student.academic_year.id student.grade %}"
+                                                                data-bs-toggle="modal" data-bs-target="#myModal{{student.id}}">
+                                                                View Grades
+                                                        </button>
+
+                                                        <!-- modal for viewing -->
+                                                        <div class="modal" id="myModal{{student.id}}" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
+                                                             <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">Student: {{ student.firstname }} {{ student.lastname }} </h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true"></span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                       <ul class="list-unstyled">
+
+                                                                           <li>First Name: <strong>{{ student.firstname }}</strong></li>
+
+                                                                       </ul>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <a class="btn btn-warning me-1" href="{% url 'form_class_edit' student.id %}">
+                                                           Edit
+                                                        </a>
+                                                        <a class="btn btn-primary me-1" href="">
+                                                           School Report
+                                                        </a>
+                                                    </td>
+
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                {% else %}
+                    <h5 class="alert alert-primary ms-4 me-4"> No Student Records</h5>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

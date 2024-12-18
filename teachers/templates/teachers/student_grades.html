@@ -1,0 +1,97 @@
+{% extends "students/base.html "%}
+
+{% block body %}
+
+    <div class="container-fluid">
+       <br>
+        <div class="row">
+            <div class="col-12">
+                {% if students %}
+                    <div class="card bg-light ms-4 mb-4">
+                        <div class="card-heading">
+                            <h4 class="me-5 subs-head"><i class="fa-solid fa-users me-2"></i>Student Grade Records</h4>
+                            <form class="col-5 mb-2 me-5 ">
+                                <input class="form-control border-1 search-bar" type="search" placeholder="Search">
+                            </form>
+
+
+
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Full Name</th>
+                                                {% for subject in subjects %}
+                                                    <th scope="col">{{ subject.subject_name }}</th>
+                                                {%endfor%}
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for student in students %}
+                                                <tr>
+                                                    <td>{{ student.stud_name.firstname }} {{ student.stud_name.lastname }}</td>
+                                                    {% for subject in subjects %}
+                                                        <td>
+                                                            {% if subject.subject_name == student.subject_name.subject_name %}
+                                                                {{ student.scores }}
+                                                            {% else %}
+                                                                N/A
+                                                            {% endif %}
+                                                        </td>
+                                                    {% endfor %}
+                                                    <td>
+                                                        <button type="button" class="btn btn-success me-1"
+                                                                href="#"
+                                                                data-bs-toggle="modal" data-bs-target="#myModal{{teacher.id}}">
+                                                                View
+                                                        </button>
+
+                                                        <!-- modal for viewing -->
+                                                        <div class="modal" id="myModal{{teacher.id}}" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
+                                                             <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">Teacher: {{ teacher.firstname }} {{ teacher.lastname }} </h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true"></span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                       <ul class="list-unstyled">
+
+                                                                           <li>First Name: <strong>{{ teacher.firstname }}</strong></li>
+                                                                           <li>Last Name: <strong>{{ teacher.lastname }}</strong></li>
+                                                                           <li>Title: <strong>{{ teacher.title }}</strong></li>
+                                                                           <li>Gender: <strong>{{ teacher.gender }}</strong></li>
+
+                                                                       </ul>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                {% else %}
+                    <h5 class="alert alert-primary ms-4 me-4"> No Grades Available For Student</h5>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

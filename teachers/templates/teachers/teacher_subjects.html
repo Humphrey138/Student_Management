@@ -1,0 +1,105 @@
+{% extends "teachers/teacher_base.html "%}
+
+{% block body %}
+    <style>
+        .add-subject-btn{
+            margin-top: 5px;
+            width: 120px;
+            height: 40px;
+        }
+        .search-bar{
+            box-shadow: 1px 2px 1px 1px  #009CFF;
+            width: 400px;
+            height: 40px;
+        }
+
+    </style>
+    <div class="container-fluid">
+       <br>
+        <div class="row">
+            <div class="col-12">
+                {% if subjects %}
+                    <div class="card bg-light ms-4 mb-4">
+                        <div class="card-heading">
+                            <h4 class="me-5 subs-head"><i class="fa-solid fa-pen-to-square"></i>Assigned Subjects</h4>
+                            <form class="col-5 mb-2 me-5 ">
+                                <input class="form-control border-1 search-bar" type="search" placeholder="Search">
+                            </form>
+                             <h4 class="me-5 subs-head">{{ academic_year.year }} {{ academic_year.term }}</h4>
+
+
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Subject Name</th>
+                                                <th>Class Name</th>
+                                                <th>Total Students InRolled </th>
+                                                <th scope="col">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for subject in subjects %}
+                                                <tr>
+                                                    <td>{{ subject.subject }}</td>
+                                                    <td>{{ subject.grade_name}}</td>
+                                                    <td></td>
+                                                    <td>
+                                                        <!--
+                                                        <button type="button" class="btn btn-warning me-1"
+                                                                href="{% url 'view_subject' subject.id %}"
+                                                                data-bs-toggle="modal" data-bs-target="#myModal{{subject.id}}">
+                                                                View
+                                                        </button>
+
+                                                         modal for viewing
+                                                        <div class="modal" id="myModal{{subject.id}}" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
+                                                             <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title">Subject: subject_name </h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true"></span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                       <ul class="list-unstyled">
+
+                                                                           <li>First Name: <strong>{{ subject.subject_name }}</strong></li>
+
+                                                                       </ul>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>-->
+                                                         <a class="btn btn-primary me-1" href="{% url 'subject_students' academic_year.id subject.subject subject.grade_name %}">
+                                                           View Students
+                                                        </a>
+                                                          <a class="btn btn-success me-1" href="{% url 'subject_register' academic_year.id subject.grade_name subject.subject %}">
+                                                           Register Student
+                                                        </a>
+
+                                                    </td>
+
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                {% else %}
+                    <h5 class="alert alert-primary ms-4 me-4"> No Subject Assigned</h5>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

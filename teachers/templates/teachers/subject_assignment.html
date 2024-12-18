@@ -1,0 +1,62 @@
+{% extends "students/base.html "%}
+
+{% block body %}
+    <div class="container-fluid">
+       <br>
+        <div class="row">
+            <div class="col-12">
+                {% if subject_assign %}
+                    <div class="card bg-light ms-4 mb-4">
+                        <div class="card-heading">
+                            <h5 class="me-5 subs-head"><i class="fa-solid fa-users me-2"></i>{{subject_name}} Teachers</h5>
+                            <form class="col-5 mb-2 me-5 ">
+                                <input class="form-control border-1 search-bar" type="search" placeholder="Search">
+                            </form>
+                             <h5 class="me-5 subs-head">{{academic_year}}</h5>
+
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Teacher Name</th>
+                                                <th scope="col">Class Name</th>
+                                                <th scope="col">Students In rolled Per Class</th>
+                                                <th scope="col">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for subject_assigning in subject_assign %}
+                                                <tr>
+                                                    <td>{{ subject_assigning.teacher_name }}</td>
+                                                    <td>{{ subject_assigning.grade_name }}</td>
+                                                    <td></td>
+
+                                                    <td>
+                                                        <a class="btn btn-warning me-1" href="{% url 'edit_assign' subject_assigning.id academic_year.id %}">
+                                                           Subject Re-assignment
+                                                        </a>
+                                                         <a class="btn btn-primary me-1" href="{% url 'subject_grades' academic_year.id subject_name subject_assigning.grade_name %}">
+                                                           Grades
+                                                        </a>
+
+                                                    </td>
+
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                {% else %}
+                    <h5 class="alert alert-primary ms-4 me-4"> No Subject Records</h5>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
